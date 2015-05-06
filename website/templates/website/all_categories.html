@@ -1,0 +1,55 @@
+{% extends "website/base.html" %}
+{% load mptt_tags %}
+
+{% block pageheader %}{{cat_path}}:All Pages{% endblock %}
+{% block subtitle %}{{cat_path}}:All Pages{% endblock %}
+{% block content %}
+{%for cat in cats %}
+<h2>{{cat.ansc_path}}</h2>
+<ul>
+		{% for page in cat.get_pages %}
+		{% if cat.is_root_node  %}
+		{% with cat.ansc_path|add:"/"|add:page.page_shortname as url_path %}
+
+		<li><a href="{% url 'website:anyPC' url_path %}">{{ page.page_title }}</a> - {{page.page_description}} <em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em></li> 
+		{% endwith %}
+		{% else %}
+		{% with cat.ansc_path|add:"/"|add:page.page_shortname as url_path %}
+		<li><a href="{% url 'website:anyPC' url_path %}">{{ page.page_title }}</a> - {{page.page_description}} <em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em></li> 
+		{% endwith %}
+		{% endif %}
+		{% endfor %}
+		{% with dsc=cat.get_descendants %}
+		{% if cat.get_descendants|length > 0 %}
+		{% recursetree dsc %}
+		{% with node.ansc_path as url_path %}
+		<!-- <li><a href="{% url 'website:anyPC'  url_path %}">{{node.category_desc}}</a></li> -->
+		<li>{{node.category_desc}}
+				{% if not node.is_leaf_node %}
+				<ul class="children">
+						{{ children }}
+				</ul>
+				{% endif %}
+				{% endwith %}
+				<ul>
+						{% for page in node.get_pages %}
+						{% if node.is_root_node  %}
+						{% with node.ansc_path|add:"/"|add:page.page_shortname as url_path %}
+
+						<li><a href="{% url 'website:anyPC' url_path %}">{{ page.page_title }}</a> - {{page.page_description}} <em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em></li> 
+						{% endwith %}
+						{% else %}
+						{% with node.ansc_path|add:"/"|add:page.page_shortname as url_path %}
+						<li><a href="{% url 'website:anyPC' url_path %}">{{ page.page_title }}</a> - {{page.page_description}} <em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em></li> 
+						{% endwith %}
+						{% endif %}
+						{% endfor %}
+				</ul>
+				{% endrecursetree %}
+		</li>
+				{% endif %}
+				{% endwith %}
+</ul>
+{% endfor %}
+
+{% endblock %}

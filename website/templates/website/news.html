@@ -1,0 +1,27 @@
+{% extends "website/base.html" %}
+{% load mptt_tags %}
+
+{% block pageheader %}{{page.page_title}} {% endblock %}
+{% block subtitle %}{{page.page_title}} {% endblock %}
+{% block end_crumbs %}
+{% if cat.is_root_node  %}
+{% with cat.category_name as url_path %}
+<a href="{%url 'website:anyPC' url_path  %}">{{ cat.category_name }}</a>{{">"}}
+{% endwith %}
+{% else %}
+{% with cat.get_ancestors|tree_path:"/"|add:"/"|add:cat.category_name as url_path %}
+<a href="{%url 'website:anyPC' url_path  %}">{{ cat.category_name }}</a>{{">"}}
+{% endwith %}
+{% endif %}
+{{page.page_shortname}} 
+{% endblock %}
+{% block content %}
+{% for news in news_entries %}
+<article>
+<h3>{{news.title}}</h3>
+<em>{{page.pub_date | date:"Y-m-d Hi e"}}</em>
+</article>
+<br>
+{{news.text|safe}}
+{% endfor %}
+{% endblock %}

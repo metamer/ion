@@ -1,0 +1,34 @@
+@import url("/static/css/structure.css");
+
+html{
+		color: #000000;
+		background-color: #ffec9f;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: right bottom;
+		background-image:url("");
+		-webkit-background-size:180px 180px;
+}
+
+article{
+		background-color: rgb(255,236,159);
+		background-color: rgba(255,236,159,0.75);
+		background-image:url("");
+}
+
+a {
+		color: #a62020;
+		font-weight: normal;
+		text-decoration: none;
+		padding: 0px;
+		margin: 0px;
+}
+
+a:hover {
+		color: #bf6060;
+		font-weight: normal;
+		text-decoration: none;
+		padding: 0px;
+		margin: 0px;
+}
+

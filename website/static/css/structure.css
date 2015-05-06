@@ -1,0 +1,29 @@
+html{
+		font-family: sans-serif;
+}
+
+ul {
+		list-style-type: disc;
+		list-style-position: outside;
+} 
+li {
+		padding: 0px;
+		margin: 2px;
+}
+
+header{
+		text-align: center;
+}
+
+nav{
+		text-align: center;
+}
+
+footer{
+		text-align: center;
+}
+
+p{
+		padding-left: 15px;
+		padding-right: 15px;
+}

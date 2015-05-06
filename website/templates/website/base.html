@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+{% load mptt_tags %}
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="shortcut icon" href="{% static "img/Japanese_Crest_onaga_mitu_Tomoe.ico" %}" >
+
+        <link rel="stylesheet" type="text/css" href="{% static "css/light_with_image.css" %}" >
+        <link rel="alternate stylesheet" title="Light (no image)" href="{% static "css/light_no_image.css" %}" >
+        <link rel="alternate stylesheet" title="Dark" href="{% static "css/dark_with_image.css" %}" >
+        <link rel="alternate stylesheet" title="Dark (no image)" href="{% static "css/dark_no_image.css" %}" >
+        <!--courtesy of http://stackoverflow.com/questions/8054638/creating-a-php-header-footer  -->
+        <link rel="alternate" type="application/rss+xml" title="News (RSS)" href="/latest/news/rss.xml">
+        <link rel="alternate" type="application/atom+xml" title="News (Atom)" href="/latest/news/atom.xml">
+        <link rel="alternate" type="application/rss+xml" title="New Pages (RSS)" href="/latest/new_pages/rss.xml">
+        <link rel="alternate" type="application/atom+xml" title="New Pages (Atom)" href="/latest/new_pages/atom.xml">
+        <link rel="alternate" type="application/rss+xml" title="Updates (RSS)" href="/latest/updates/rss.xml">
+        <link rel="alternate" type="application/atom+xml" title="Updates (Atom)" href="/latest/updates/atom.xml">
+        <title>Distant Constructs  - {% block pageheader %}{% endblock  %}</title>
+    </head>
+        <body>
+            <header>
+                <h1><a href="{% url 'website:anyPC' 'top/home' %}" title="Home Page">Distant Constructs</a></h1>
+                <h2>{% block subtitle %}{% endblock  %}</h2>
+            </header>
+            <hr>
+            <nav>
+				<h2 hidden>Breadcrumbs</h2>
+                <p>
+                {% if not cat.is_root_node  %}
+                {% for ans_cat in cat.get_ancestors %}
+                {% if ans_cat.is_root_node  %}
+                {% with ans_cat.category_name as url_path %}
+                <a href="{%url 'website:anyPC' url_path|add:"/index"  %}">{{ ans_cat.category_name }}</a>{{">"}}
+                {% endwith %}
+                {% else %}
+                {% with ans_cat.get_ancestors|tree_path:"/"|add:"/"|add:ans_cat.category_name as url_path %}
+                <a href="{%url 'website:anyPC' url_path|add:"/index"  %}">{{ ans_cat.category_name }}</a>{{">"}}
+                {% endwith %}
+                {% endif %}
+                {% endfor  %}
+                {% endif %}
+                {% block end_crumbs %}
+                {{cat.category_name}}
+                {% endblock %}
+                </p>
+            </nav>
+            <hr>
+            <article>
+                {% block content %}
+                {% endblock %}
+            </article>
+            <hr>
+            <nav>
+                <section>
+				<h3 hidden>Categories</h3>
+                -
+                {% full_tree_for_model website.PageCategory as allCats %}
+                {% for category in rootCats %}
+                <a href="{% url 'website:anyPC' category.category_name|add:"/index" %}">{{ category.category_name }}</a> -
+                {% endfor %}
+                </section>
+                <section>
+				<h3 hidden>Useful Pages</h3>
+				-
+                <a href="{%url 'website:anyPC' "top/news"%}">news</a> -
+                <a href="{%url 'website:anyPC' "top/subscribe"%}">subscribe</a> -
+                <a href="{%url 'website:anyPC' "about/contact"%}">contact</a> -
+                <a href="{%url 'website:anyPC' "about/license"%}">license</a> -
+                <a href="{%url 'website:anyPC' "top/links"%}">links</a> -
+                <br>
+                </section>
+            </nav>
+            <hr>
+            <footer>
+                <p>
+				<a href="http://validator.w3.org/check?uri=referer"> <img src="{% static "img/html5logo.svg" %}" width="31" height="31" alt="Click to Validate HTML5 (experimental)" title="HTML5 Powered (click to validate)"> </a>
+				<a href="http://jigsaw.w3.org/css-validator/check/referer"> <img style="border:0;width:88px;height:31px" src="{% static "img/valid-css-v.svg" %}" alt="Click to validate CSS." /> </a>
+				<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="{% static "img/cc-by-sa.svg" %}" width="88" height="31" alt="Creative Commons BY-SA License Logo. Click for license details."></a>
+                </p>
+            </footer>
+        </body>
+</html>

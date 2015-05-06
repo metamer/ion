@@ -1,0 +1,45 @@
+{% extends "website/base.html" %}
+{% load mptt_tags %}
+
+{% block pageheader %}{{cat.category_name}} {% endblock %}
+{% block subtitle %}{{cat.category_desc}} {% endblock %}
+{% block content %}
+<h2 hidden>{{cat.category_desc}} Contents</h2>
+<p>
+<em><a href="{% url 'website:allPages' "/"|add:cat.ansc_path %}">All Pages in {{cat.category_name}} and subcategories</a></em>
+</p>
+<ul>
+		{% for page in cat.get_pages %}
+		{% if cat.is_root_node  %}
+				{% with cat.ansc_path|add:"/"|add:page.page_shortname as url_path %}
+
+				<li><a href="{% url 'website:anyPC' url_path %}">{{ page.page_title }}</a> - {{page.page_description}} <em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em></li> 
+				{% endwith %}
+		{% else %}
+				{% with cat.ansc_path|add:"/"|add:page.page_shortname as url_path %}
+				<li><a href="{% url 'website:anyPC' url_path %}">{{ page.page_title }}</a> - {{page.page_description}} <em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em></li> 
+		{% endwith %}
+		{% endif %}
+		{% endfor %}
+</ul>
+{% with dsc=cat.get_descendants %}
+{% if cat.get_descendants|length > 0 %}
+<h2>Subcategories</h2>
+<ul>
+		{% for node in  dsc %}
+		<li>
+				{% with node.ansc_path as url_path %}
+				<a href="{% url 'website:anyPC'  url_path|add:"/index" %}">{{node.category_desc}}</a>
+				{% if not node.is_leaf_node %}
+				<ul class="children">
+						{{ children }}
+				</ul>
+				{% endif %}
+				{% endwith %}
+		</li>
+		{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% endblock %}

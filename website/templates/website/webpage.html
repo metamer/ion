@@ -1,0 +1,24 @@
+{% extends "website/base.html" %}
+{% load mptt_tags %}
+
+{% block pageheader %}{{page.page_title}} {% endblock %}
+{% block subtitle %}{{page.page_title}} {% endblock %}
+{% block end_crumbs %}
+{% if cat.is_root_node  %}
+{% with cat.category_name as url_path %}
+<a href="{%url 'website:anyPC' url_path|add:"/index"  %}">{{ cat.category_name }}</a>{{">"}}
+{% endwith %}
+{% else %}
+{% with cat.get_ancestors|tree_path:"/"|add:"/"|add:cat.category_name as url_path %}
+<a href="{%url 'website:anyPC' url_path|add:"/index"  %}">{{ cat.category_name }}</a>{{">"}}
+{% endwith %}
+{% endif %}
+{{page.page_shortname}} 
+{% endblock %}
+{% block content %}
+{{page.page_text|safe}}
+<br>
+<em>first published: {{page.pub_date | date:"Y-m-d Hi e"}}</em>
+<br>
+<em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em>
+{% endblock %}
