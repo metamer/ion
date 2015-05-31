@@ -9,6 +9,8 @@ class PageCategory(MPTTModel):
     category_name = models.CharField(max_length = 20, unique=True, validators = [RegexValidator("^[\w]+$", message="category name must be alphanumeric")])
     category_desc = models.CharField(max_length = 200)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    class Meta:
+        verbose_name_plural = "Page Categories"
     def __str__(self):
         return self.category_name
     def ansc_path(self):
@@ -38,6 +40,8 @@ class NewsEntry(models.Model):
     title = models.CharField(max_length = 200, help_text="Title of the news entry")
     text = models.TextField(help_text="HTML content of page")
     pub_date = models.DateTimeField('date published', help_text = "Date page was first published")
+    class Meta:
+        verbose_name_plural = "News Entries"
     def __str__(self):
         return self.title
 
