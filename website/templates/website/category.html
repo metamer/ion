@@ -2,6 +2,9 @@
 {% load mptt_tags %}
 
 {% block pageheader %}{{cat.category_name}} {% endblock %}
+{% block additionalheaders %}
+		<meta http-equiv="Description" content="{{cat.category_desc}}" />
+{% endblock %}
 {% block subtitle %}{{cat.category_desc}} {% endblock %}
 {% block content %}
 <h2 hidden>{{cat.category_desc}} Contents</h2>
@@ -22,8 +25,8 @@
 		{% endif %}
 		{% endfor %}
 </ul>
-{% with dsc=cat.get_descendants %}
-{% if cat.get_descendants|length > 0 %}
+{% with dsc=cat.get_children %}
+{% if dsc|length > 0 %}
 <h2>Subcategories</h2>
 <ul>
 		{% for node in  dsc %}

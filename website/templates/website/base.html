@@ -1,9 +1,13 @@
 <!DOCTYPE HTML>
 {% load staticfiles %}
 {% load mptt_tags %}
-<html>
+<html lang="en" dir="ltr">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content="Django 1.8.2">
+
         <link rel="shortcut icon" href="{% static "img/Japanese_Crest_onaga_mitu_Tomoe.ico" %}" >
 
         <link rel="stylesheet" type="text/css" href="{% static "css/light_with_image.css" %}" >
@@ -18,6 +22,8 @@
         <link rel="alternate" type="application/rss+xml" title="Updates (RSS)" href="/latest/updates/rss.xml">
         <link rel="alternate" type="application/atom+xml" title="Updates (Atom)" href="/latest/updates/atom.xml">
         <title>Distant Constructs  - {% block pageheader %}{% endblock  %}</title>
+		{% block additionalheaders %}
+		{% endblock %}
     </head>
         <body>
             <header>

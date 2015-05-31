@@ -2,6 +2,9 @@
 {% load mptt_tags %}
 
 {% block pageheader %}{{page.page_title}} {% endblock %}
+{% block additionalheaders %}
+    <meta http-equiv="Description" content="{{page.page_description}}" />
+{% endblock %}
 {% block subtitle %}{{page.page_title}} {% endblock %}
 {% block end_crumbs %}
 {% if cat.is_root_node  %}
