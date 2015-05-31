@@ -2,6 +2,8 @@
 mptt/
 website/static/img
 
+## known temp files
+*.swp
 
 ### Below from https://github.com/github/gitignore/blob/master/Python.gitignore
 # Byte-compiled / optimized / DLL files
