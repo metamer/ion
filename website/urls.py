@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, url
+from django.views.generic import base
+from django.views.generic.base import RedirectView
 from website.feeds import LatestEntriesFeedRSS,LatestEntriesFeedAtom
 from website.feeds import NewsFeedRSS,NewsFeedAtom
 
@@ -15,6 +17,7 @@ urlpatterns = patterns('',
         ,url(r'^all_pages/?(?P<cat_path>.*).html$' , views.allPages, name='allPages')
         ,url(r'^top/news.html?$' , views.news, name='news')
         ,url(r'^index.html$' , views.anyPC)
+        #,url(r'^favicon\.ico$', RedirectView.as_view(url='static/img/favicon.ico'))
         ,url(r'^(?P<urlString>.+)/index.html$' , views.anyPC, name='anyPC')
         ,url(r'^(?P<urlString>.+).html$' , views.anyPC, name='anyPC')
         #url(r'^(?P<category_name>.+)/(?P<page_shortname>.+)$' , views.webpage, name='webpage')
