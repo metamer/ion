@@ -32,3 +32,6 @@ a:hover {
 		margin: 0px;
 }
 
+*:target{
+	background-color: #fab8b8;
+}
