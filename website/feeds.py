@@ -73,3 +73,29 @@ class NewsFeedRSS(Feed):
 class NewsFeedAtom(NewsFeedRSS):
     feed_type = Atom1Feed
     subtitle = NewsFeedRSS.description
+
+from website.models import Comment
+
+class CommentaryFeedRSS(Feed):
+    title = "Distant Constructs Commentary"
+    link = "/latest/commentary/"
+    description = "Distant Constructs Commentary"
+
+    def items(self):
+        return Comment.objects.order_by('-pub_date')[:5]
+
+    def item_title(self, item):
+        return item.link_title
+
+    def item_description(self, item):
+        return item.text
+
+    def item_pubdate(self, item):
+        return item.pub_date
+
+    def item_link(self, item):
+        return item.link
+
+class CommentaryFeedAtom(CommentaryFeedRSS):
+    feed_type = Atom1Feed
+    subtitle = CommentaryFeedRSS.description

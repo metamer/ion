@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, URLValidator
 
 # Create your models here.
 from mptt.models import MPTTModel, TreeForeignKey
@@ -28,7 +28,7 @@ class Page(models.Model):
     page_text = models.TextField(blank=True, help_text="HTML content of page")
     page_category = models.ForeignKey(PageCategory)
     pub_date = models.DateTimeField('date published', help_text = "Date page was first published")
-    update_date = models.DateTimeField('date updated',help_text = "Date page was last updated")
+    update_date = models.DateTimeField('date updated', auto_now=True, help_text = "Date page was last updated")
     update_comment = models.CharField(max_length = 500, blank=True, help_text = "Changes made during last update")
     def __str__(self):
         return self.page_title
@@ -39,7 +39,7 @@ class Page(models.Model):
 class NewsEntry(models.Model):
     title = models.CharField(max_length = 200, help_text="Title of the news entry")
     text = models.TextField(help_text="HTML content of page")
-    pub_date = models.DateTimeField('date published', help_text = "Date page was first published")
+    pub_date = models.DateTimeField('date published', auto_now=True, help_text = "Date page was first published")
     class Meta:
         verbose_name_plural = "News Entries"
     def __str__(self):
@@ -47,3 +47,11 @@ class NewsEntry(models.Model):
 
 class MPTTMeta:
     order_insertion_by = ['name']
+
+class Comment(models.Model):
+    link = models.URLField(blank=False, help_text="Link to commented page")
+    link_title = models.CharField(max_length = 200, help_text="Title of linked page ")
+    text = models.TextField(help_text="HTML comment")
+    pub_date = models.DateTimeField('date published',auto_now=True, help_text = "Date comment was first published")
+    def __str__(self):
+        return "{0}:{1}".format(self.link_title, str(self.pub_date))

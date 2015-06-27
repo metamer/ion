@@ -1,8 +1,24 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
-from website.models import PageCategory, Page, NewsEntry
+from website.models import PageCategory, Page, NewsEntry, Comment
 
 # Create your views here.
+def commentary(request) :
+    cat_path = "top"
+    page_shortname = "commentary"
+    pages = Page.objects.filter(page_shortname = page_shortname)
+    if len(pages) == 0 :
+        raise Http404("Page with name >{0}< does not exist".format(page_shortname))
+    for page in pages:
+        ansc_path = page.page_category.ansc_path()
+        if(cat_path == ansc_path):
+            return render(request, 'website/commentary.html',
+                    {'page' : page 
+                        , 'cat' : page.page_category
+                        , 'comments' : Comment.objects.order_by("-pub_date")
+                        , 'rootCats' : get_root_cats() 
+                    })
+    raise Http404("Page does with name {0} not exist in path {1}".format(page_shortname,cat_path))
 
 def news(request) :
     cat_path = "top"
