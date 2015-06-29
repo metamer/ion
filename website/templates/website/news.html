@@ -19,12 +19,14 @@
 {{page.page_shortname}} 
 {% endblock %}
 {% block content %}
+<h2 hidden>News Entries</h2>
 {% for news in news_entries %}
 <article>
 <h3>{{news.title}}</h3>
 <em>{{news.pub_date | date:"Y-m-d Hi e"}}</em>
 </article>
-<br>
+<p>
 {{news.text|safe}}
+</p>
 {% endfor %}
 {% endblock %}

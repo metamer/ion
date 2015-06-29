@@ -19,6 +19,7 @@
 {{page.page_shortname}} 
 {% endblock %}
 {% block content %}
+<h2 hidden>Comments</h2>
 {% for comment in comments %}
 <article>
 		<h3><a href="{{comment.link}}">{{comment.link_title}}</a></h3>
