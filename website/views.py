@@ -1,8 +1,25 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
-from website.models import PageCategory, Page, NewsEntry, Comment
+from website.models import PageCategory, Page, NewsEntry, Comment, LicenseUsage
 
 # Create your views here.
+def licenseusage(request) :
+    cat_path = "about"
+    page_shortname = "license"
+    pages = Page.objects.filter(page_shortname = page_shortname)
+    if len(pages) == 0 :
+        raise Http404("Page with name >{0}< does not exist".format(page_shortname))
+    for page in pages:
+        ansc_path = page.page_category.ansc_path()
+        if(cat_path == ansc_path):
+            return render(request, 'website/license_usage.html',
+                    {'page' : page 
+                        , 'cat' : page.page_category
+                        , 'licenseusages' : LicenseUsage.objects.order_by("item")
+                        , 'rootCats' : get_root_cats() 
+                    })
+    raise Http404("Page does with name {0} not exist in path {1}".format(page_shortname,cat_path))
+
 def commentary(request) :
     cat_path = "top"
     page_shortname = "commentary"

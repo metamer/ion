@@ -20,6 +20,7 @@ urlpatterns = patterns('',
         ,url(r'^all_pages/?(?P<cat_path>.*).html$' , views.allPages, name='allPages')
         ,url(r'^top/news.html?$' , views.news, name='news')
         ,url(r'^top/commentary.html?$' , views.commentary, name='commentary')
+        ,url(r'^about/license.html?$' , views.licenseusage, name='licenseusage')
         ,url(r'^index.html$' , views.anyPC)
         #,url(r'^favicon\.ico$', RedirectView.as_view(url='static/img/favicon.ico'))
         ,url(r'^(?P<urlString>.+)/index.html$' , views.anyPC, name='anyPC')

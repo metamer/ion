@@ -55,3 +55,24 @@ class Comment(models.Model):
     pub_date = models.DateTimeField('date published',auto_now=True, help_text = "Date comment was first published")
     def __str__(self):
         return "{0}:{1}".format(self.link_title, str(self.pub_date))
+
+class GenericLink(models.Model):
+    name =  models.CharField(max_length = 200, blank=False, help_text="Name")
+    link = models.URLField(blank=False, help_text="Link")
+    def __str__(self):
+        return "{0}".format(self.name)
+
+
+class License(GenericLink):
+    pass
+
+class LicenseUsage(models.Model):
+    item = models.CharField(max_length = 200, blank=False, help_text="Name of item")
+    source_name = models.CharField(max_length = 200, blank=False, help_text="Name of source")
+    source_link = models.URLField(blank=False, help_text="Link to commented page")
+    license = models.ForeignKey(License)
+    attribution = models.TextField(help_text="HTML for attribution")
+    usage = models.TextField(help_text="HTML for usage")
+    notes = models.TextField(blank=True,help_text="HTML for notes")
+    def __str__(self):
+        return "{0}".format(self.item)

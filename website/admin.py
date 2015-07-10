@@ -13,3 +13,7 @@ admin.site.register(NewsEntry)
 
 from website.models import Comment
 admin.site.register(Comment)
+
+from website.models import License, LicenseUsage
+admin.site.register(License)
+admin.site.register(LicenseUsage)

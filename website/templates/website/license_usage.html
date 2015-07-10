@@ -1,0 +1,65 @@
+{% extends "website/base.html" %}
+{% load mptt_tags %}
+
+{% block pageheader %}{{page.page_title}} {% endblock %}
+{% block additionalheaders %}
+<meta name="Description" content="{{page.page_description}}" />
+{% endblock %}
+{% block subtitle %}{{page.page_title}} {% endblock %}
+{% block end_crumbs %}
+{% if cat.is_root_node  %}
+{% with cat.category_name as url_path %}
+<a href="{%url 'website:anyPC' url_path  %}">{{ cat.category_name }}</a>{{">"}}
+{% endwith %}
+{% else %}
+{% with cat.get_ancestors|tree_path:"/"|add:"/"|add:cat.category_name as url_path %}
+<a href="{%url 'website:anyPC' url_path  %}">{{ cat.category_name }}</a>{{">"}}
+{% endwith %}
+{% endif %}
+{{page.page_shortname}} 
+{% endblock %}
+{% block content %}
+		<h2>License Details</h3>
+<section>
+		<h3 hidden>Introduction</h3>
+		<p>
+		This page contains a list of media used on this site and any license exceptions
+		</p>
+</section>
+<section>
+		<h3>License</h3>
+		<p>
+		All content, unless otherwise noted on the <a href="#media_use">Media Use/License Exceptions table</a>, is licensed under the
+		Creative Commons Attribution Share-Alike License, which is linked site-wide through the footer.
+		This allows you to reuse/adapt content in any way that you want as long as you attribute it 
+		and use the same license. A link to this site is sufficient attribution.
+		Please refer to the <a href="https://creativecommons.org/licenses/by-sa/4.0/">official page on the Creative Commons BY-SA 4.0 license</a> for additional information.
+		</p>
+</section>
+<section>
+		<h3 id="media_use" >Media Usage and License Exemption Table</h3>
+		<table>
+				<tr>
+						<th>Item</th>
+						<th>Source</th>
+						<th>License</th>
+						<th>Attribution</th>
+						<th>Usage</th>
+						<th>Notes</th>
+				</tr>
+				{% for lu in licenseusages %}
+				<tr>
+						<td>{{lu.item}}</td>
+						<td><a href="{{lu.source_link}}">{{lu.source_name}}</a></td>
+						<td><a href="{{lu.license.link}}">{{lu.license.name}}</a></td>
+						<td>{{lu.attribution|safe}}</td>
+						<td>{{lu.usage|safe}}</td>
+						<td>{{lu.notes|safe}}</td>
+				</tr>
+				{% endfor %}
+		</table>
+<br>
+<em>first published: {{page.pub_date | date:"Y-m-d Hi e"}}</em>
+<br>
+<em>last updated: {{page.update_date | date:"Y-m-d Hi e"}}</em>
+{% endblock %}
