@@ -5,7 +5,7 @@ from django.contrib.sitemaps import Sitemap
 from website.models import Page, PageCategory
 
 class PageSitemap(Sitemap):
-    changefreq = "never"
+    changefreq = "weekly"
     priority = 0.5
 
     def items(self):
