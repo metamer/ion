@@ -7,7 +7,7 @@ from website.feeds import CommentaryFeedRSS,CommentaryFeedAtom
 
 from website import views
 
-urlpatterns = patterns('',
+urlpatterns = [
         url(r'^latest/new_pages/rss.xml?$' , LatestEntriesFeedRSS(updates=False))
         ,url(r'^latest/new_pages/atom.xml?$' , LatestEntriesFeedAtom(updates=False))
         ,url(r'^latest/updates/rss.xml?$' , LatestEntriesFeedRSS(updates=True))
@@ -28,4 +28,4 @@ urlpatterns = patterns('',
         #url(r'^(?P<category_name>.+)/(?P<page_shortname>.+)$' , views.webpage, name='webpage')
         #,url(r'^(?P<category_name>.+)$' , views.category, name='category')
         #,url(r'^(?P<category_name>.+)$' , views.category, name='category')
-        )
+        ]

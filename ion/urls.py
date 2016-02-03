@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import Sitemap
@@ -19,7 +19,7 @@ class PageSitemap(Sitemap):
 
 sitemaps = {"website":PageSitemap}
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     # url(r'^$', 'ion.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
@@ -27,5 +27,5 @@ urlpatterns = patterns('',
     #,url(r'^polls/', include('polls.urls', namespace="polls"))
     url(r'^admin/', include(admin.site.urls))
     ,url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
-    ,url(r'^', include('website.urls', namespace="website"))
-)
+    ,url(r'^', include('website.urls', namespace="website"))]
+
