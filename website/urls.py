@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import *
 from django.views.generic import base
 from django.views.generic.base import RedirectView
 from website.feeds import LatestEntriesFeedRSS,LatestEntriesFeedAtom

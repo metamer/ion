@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.conf.urls import *
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import Sitemap
