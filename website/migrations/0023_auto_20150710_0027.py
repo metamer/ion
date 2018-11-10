@@ -34,25 +34,27 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='License',
             fields=[
-                ('genericlink_ptr', models.OneToOneField(serialize=False, to='website.GenericLink', primary_key=True, auto_created=True, parent_link=True)),
+                ('genericlink_ptr',
+                    models.OneToOneField(on_delete=models.PROTECT, serialize=False, to='website.GenericLink', primary_key=True, auto_created=True, parent_link=True)),
             ],
             bases=('website.genericlink',),
         ),
         migrations.CreateModel(
             name='LicenseItemLink',
             fields=[
-                ('genericlink_ptr', models.OneToOneField(serialize=False, to='website.GenericLink', primary_key=True, auto_created=True, parent_link=True)),
+                ('genericlink_ptr',
+                    models.OneToOneField(on_delete=models.PROTECT, serialize=False, to='website.GenericLink', primary_key=True, auto_created=True, parent_link=True)),
             ],
             bases=('website.genericlink',),
         ),
         migrations.AddField(
             model_name='licenseusage',
             name='license',
-            field=models.ForeignKey(to='website.License'),
+            field=models.ForeignKey(on_delete=models.PROTECT, to='website.License'),
         ),
         migrations.AddField(
             model_name='licenseitemlink',
             name='license_usage',
-            field=models.ForeignKey(to='website.LicenseUsage'),
+            field=models.ForeignKey(on_delete=models.PROTECT, to='website.LicenseUsage'),
         ),
     ]

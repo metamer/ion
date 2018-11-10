@@ -8,7 +8,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 class PageCategory(MPTTModel):
     category_name = models.CharField(max_length = 20, unique=True, validators = [RegexValidator("^[\w]+$", message="category name must be alphanumeric")])
     category_desc = models.CharField(max_length = 200)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    parent = TreeForeignKey('self', models.PROTECT, null=True, blank=True, related_name='children')
     class Meta:
         verbose_name_plural = "Page Categories"
     def __str__(self):
@@ -26,7 +26,7 @@ class Page(models.Model):
     page_shortname = models.CharField(max_length = 20, validators = [RegexValidator("^[\w]+$", message="shortname must be alphanumeric")], help_text="Short name of page (no special chars or spaces). This will be used for the url location of the page. Use _ to separate words.")
     page_description = models.CharField(max_length = 500, blank=True, help_text = "Description of page")
     page_text = models.TextField(blank=True, help_text="HTML content of page")
-    page_category = models.ForeignKey(PageCategory)
+    page_category = models.ForeignKey(PageCategory, models.PROTECT)
     pub_date = models.DateTimeField('date published', help_text = "Date page was first published")
     update_date = models.DateTimeField('date updated', auto_now=True, help_text = "Date page was last updated")
     update_comment = models.CharField(max_length = 500, blank=True, help_text = "Changes made during last update")
@@ -70,7 +70,7 @@ class LicenseUsage(models.Model):
     item = models.CharField(max_length = 200, blank=False, help_text="Name of item")
     source_name = models.CharField(max_length = 200, blank=False, help_text="Name of source")
     source_link = models.URLField(blank=False, help_text="Link to commented page")
-    license = models.ForeignKey(License)
+    license = models.ForeignKey(License, models.PROTECT)
     attribution = models.TextField(help_text="HTML for attribution")
     usage = models.TextField(help_text="HTML for usage")
     notes = models.TextField(blank=True,help_text="HTML for notes")

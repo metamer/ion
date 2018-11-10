@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='page',
             name='page_category',
-            field=models.ForeignKey(default=17, to='website.PageCategory'),
+            field=models.ForeignKey(on_delete=models.PROTECT, default=17, to='website.PageCategory'),
             preserve_default=False,
         ),
     ]

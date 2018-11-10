@@ -7,6 +7,7 @@ from website.feeds import CommentaryFeedRSS,CommentaryFeedAtom
 
 from website import views
 
+app_name = "ion"
 urlpatterns = [
         url(r'^latest/new_pages/rss.xml?$' , LatestEntriesFeedRSS(updates=False))
         ,url(r'^latest/new_pages/atom.xml?$' , LatestEntriesFeedAtom(updates=False))

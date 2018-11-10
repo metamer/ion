@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pagecategory',
             name='parent',
-            field=mptt.fields.TreeForeignKey(blank=True, to='website.PageCategory', related_name='children', null=True),
+            field=mptt.fields.TreeForeignKey(on_delete=models.PROTECT, blank=True, to='website.PageCategory', related_name='children', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

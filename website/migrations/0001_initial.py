@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
                 ('category_name', models.CharField(max_length=200)),
-                ('parent_category', models.ForeignKey(blank=True, to='website.PageCategory', null=True)),
+                ('parent_category', models.ForeignKey(on_delete=models.PROTECT, blank=True, to='website.PageCategory', null=True)),
             ],
             options={
             },
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='page',
             name='page_category',
-            field=models.ForeignKey(to='website.PageCategory'),
+            field=models.ForeignKey(on_delete=models.PROTECT, to='website.PageCategory'),
             preserve_default=True,
         ),
     ]
